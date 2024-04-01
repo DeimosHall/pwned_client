@@ -51,4 +51,7 @@ extern OWASPProfile OWASPA10;
 
 extern OWASPProfile* owasp_profiles[];
 OWASPProfile* getOWASPProfile(int index);
+
+extern void get_owasp_profile_cwe_uint8(uint8_t* dest_buffer, OWASPProfile *profile);
+
 #endif // ENGINE_H

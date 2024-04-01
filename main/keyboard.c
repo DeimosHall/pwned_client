@@ -47,9 +47,9 @@ void keyboard_init() {
 void button_event_cb(void* arg, void* data) {
     uint8_t button_name = (((button_event_t)data) >> 4);   // >> 4 to get the button number
     uint8_t button_event = ((button_event_t)data) & 0x0F;  // & 0x0F to get the event number without the mask
-    const char* button_name_str = button_name_table[button_name];
-    const char* button_event_str = button_event_table[button_event];
-    ESP_LOGI(TAG_KEYBOARD, "Button: %s, Event: %s", button_name_str, button_event_str);
+    // const char* button_name_str = button_name_table[button_name];
+    // const char* button_event_str = button_event_table[button_event];
+    //ESP_LOGI(TAG_KEYBOARD, "Button: %s, Event: %s", button_name_str, button_event_str);
 
     switch (button_name) {
         case BOOT:
@@ -63,13 +63,7 @@ void button_event_cb(void* arg, void* data) {
             if (button_event == BUTTON_PRESS_DOWN) {
                 ESP_LOGI(TAG_KEYBOARD, "Right button pressed");
                 uint8_t *username_char[sizeof(OWASPA01.vuln->cwe)];
-                get_profile_owasp_uint8(&username_char, getOWASPProfile(index_position));
-
-                esp_ble_gatts_send_indicate(gatts_profile_tab[DEVICE_PROFILE_USERNAME].gattc_if, 
-                                            gatts_profile_tab[DEVICE_PROFILE_USERNAME].conn_id, 
-                                            gatts_profile_tab[DEVICE_PROFILE_USERNAME].char_handle,
-                                            sizeof(OWASPA01.vuln->cwe), 
-                                            &username_char, false);
+                get_owasp_profile_cwe_uint8(&username_char, getOWASPProfile(index_position));
             }
             break;
         }

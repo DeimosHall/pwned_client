@@ -36,17 +36,13 @@
 #define TAG_MAIN "EC_APPSECPWN"
 
 struct gattc_profile_inst gatts_profile_tab[DEVICE_PROFILES] = {
-    [DEVICE_PROFILE_USERNAME] = {
-        .gattc_cb = gatts_profile_username_event_handler,
+    [DEVICE_PROFILE] = {
+        .gattc_cb = gatts_profiles_event_handler,
         .gattc_if = ESP_GATT_IF_NONE,
     }
-    // [DEVICE_PROFILE_OWASP] = {
-    //     .gattc_cb = gatts_profile_owasp_event_handler,
-    //     .gattc_if = ESP_GATT_IF_NONE,
-    // },
 };
 
 void app_main(void) {
-    //keyboard_init();
+    keyboard_init();
     init_ble_task();
 }
