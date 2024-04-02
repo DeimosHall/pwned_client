@@ -3,6 +3,8 @@
 #include <string.h>
 #include "engine.h"
 
+#define BYTES_PER_LINE 16
+
 const OWASPVulns vulns[] = {
     {"A01", "Broken Access Control"},
     {"A02", "Cryptographic Failures"},

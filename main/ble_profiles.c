@@ -68,6 +68,7 @@ Player player2 = {
     .team = "red"
 };
 
+
 void gatts_profiles_event_handler(esp_gattc_cb_event_t event, esp_gatt_if_t gattc_if, esp_ble_gattc_cb_param_t *param) {
     esp_ble_gattc_cb_param_t *p_data = (esp_ble_gattc_cb_param_t *)param;
 
@@ -257,6 +258,18 @@ void gatts_profiles_event_handler(esp_gattc_cb_event_t event, esp_gatt_if_t gatt
         }
         esp_log_buffer_hex(TAG_BLE, p_data->notify.value, p_data->notify.value_len);
         esp_log_buffer_char(TAG_BLE, p_data->notify.value, p_data->notify.value_len);
+        
+        const char *ble_recived = (const char *)p_data->notify.value;
+        int ble_command = ble_recived[0] - '0';
+        
+        ESP_LOGI(TAG_BLE, "notify value %s", ble_recived);
+        ESP_LOGI(TAG_BLE, "command value %d", ble_command);
+
+        if (ble_command == 1) {
+            ESP_LOGI(TAG_BLE, "OWASP Profile");
+        }else {
+            ESP_LOGI(TAG_BLE, "Command not reconognized");
+        }
         break;
     case ESP_GATTC_WRITE_DESCR_EVT:
         if (p_data->write.status != ESP_GATT_OK){
@@ -336,8 +349,6 @@ void esp_gap_cb(esp_gap_ble_cb_event_t event, esp_ble_gap_cb_param_t *param)
                                                 ESP_BLE_AD_TYPE_NAME_CMPL, &adv_name_len);
             ESP_LOGI(TAG_BLE, "searched Device Name Len %d", adv_name_len);
             esp_log_buffer_char(TAG_BLE, adv_name, adv_name_len);
-            ESP_LOGI(TAG_BLE, " ");
-
             if (adv_name != NULL) {
                 if (strlen(remote_device_name) == adv_name_len && strncmp((char *)adv_name, remote_device_name, adv_name_len) == 0) {
                     ESP_LOGI(TAG_BLE, "searched device %s", remote_device_name);

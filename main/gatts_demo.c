@@ -28,6 +28,7 @@
 
 #include "engine.h"
 #include "ble_profiles.h"
+#include "oled_ssd1306.h"
 #include "keyboard.h"
 #include "button_helper.h"
 
@@ -44,5 +45,6 @@ struct gattc_profile_inst gatts_profile_tab[DEVICE_PROFILES] = {
 
 void app_main(void) {
     keyboard_init();
+    init_i2c_bus();
     init_ble_task();
 }

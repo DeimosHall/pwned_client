@@ -46,11 +46,12 @@ typedef struct {
     esp_bd_addr_t remote_bda;
 }gattc_profile_inst;
 
-// GATT Client
+extern struct gattc_profile_inst gatts_profile_tab[DEVICE_PROFILES];
+
 void esp_gap_cb(esp_gap_ble_cb_event_t event, esp_ble_gap_cb_param_t *param);
 void esp_gattc_cb(esp_gattc_cb_event_t event, esp_gatt_if_t gattc_if, esp_ble_gattc_cb_param_t *param);
 extern void gatts_profiles_event_handler(esp_gattc_cb_event_t event, esp_gatt_if_t gattc_if, esp_ble_gattc_cb_param_t *param);
-extern struct gattc_profile_inst gatts_profile_tab[DEVICE_PROFILES];
+
 
 void init_ble_task(void);
 #endif // BLE_PROFILES_H
